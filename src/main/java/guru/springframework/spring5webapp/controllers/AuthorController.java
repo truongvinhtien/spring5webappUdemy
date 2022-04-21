@@ -4,6 +4,8 @@ import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,20 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping("api/user")
+@Controller
+@RequestMapping("authors")
 public class AuthorController {
 
     @Autowired
     private AuthorRepository authorRepo;
 
+
     @GetMapping
-    public List<Author> findAllUser() {
-        List<Author> returnList = new ArrayList<>();
-        Author eric = new Author("Eric", "Evan");
-        returnList.add(eric);
-//        return (List<Author>) authorRepo.findAll();
-        return returnList;
+    public String getAuthors(Model model) {
+        model.addAttribute("authors", authorRepo.findAll());
+
+        return "authors/list";
     }
 
     @GetMapping("/{id}")

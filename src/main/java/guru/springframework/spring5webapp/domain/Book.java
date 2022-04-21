@@ -15,9 +15,6 @@ public class Book {
     private String isbn;
 
     @ManyToOne
-    @JoinColumn(
-            name = "publisher_id"
-    )
     private Publisher publisher;
 
     public Publisher getPublisher() {
@@ -30,7 +27,8 @@ public class Book {
 
 
     @ManyToMany
-    @JoinTable(name = "author_book",
+    @JoinTable(
+            name = "author_book",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
@@ -104,7 +102,6 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
                 '}';
     }
 }
